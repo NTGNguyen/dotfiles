@@ -1,0 +1,14 @@
+[user]
+	name = NTGNguyen
+	email = ntgnguyen@duck.com
+	signingkey = /home/ntgnguyen/.ssh/id_ed25519.pub
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[pull]
+	rebase = true
+[core]
+	editor = nvim
+[rebase]
+	autoStash = true
