@@ -1,0 +1,14 @@
+Host *
+  StrictHostKeyChecking no
+
+Host github.com
+  User git
+  Port 22
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/id_ed25519
+
+Host keke
+  HostName kevostro-arch.pardus-eel.ts.net
+  User kevinnitro
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519

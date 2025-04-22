@@ -1,6 +1,13 @@
 {{ $email := promptStringOnce . "email" "What is your email address" -}}
 {{ $username := promptStringOnce . "username" "What is your userName" -}}
+{{ $agePublicKey := promptStringOnce . "agePublicKey" "What is your age public key" -}}
+
+encryption = "age"
 
 [data]
-    email = {{ $email | quote }}
-    username = {{ $username | quote }} 
+  email = {{ $email | quote }}
+  username = {{ $username | quote }}
+
+[age]
+  identity = "~/age_key.txt"
+  recipient = {{ $agePublicKey | quote }} 
