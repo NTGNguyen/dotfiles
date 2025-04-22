@@ -22,5 +22,14 @@ url = "https://github.com/lukechilds/zsh-better-npm-completion.git"
 type = "git-repo"
 url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 
+[".config/tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm"
 
+[".config/yazi/theme.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha/catppuccin-mocha-lavender.toml"
 
+[".config/kitty/theme.conf"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/kitty/refs/heads/main/themes/mocha.conf"
