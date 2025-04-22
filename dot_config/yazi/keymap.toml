@@ -1,0 +1,15 @@
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[manager]
+
+prepend_keymap = [
+  { on = "<Up>", run = "arrow top", desc = "Go to top"},
+  { on = "<Down>", run = "arrow bot", desc = "Go to bottom"},
+]
+
+[help]
+
+prepend_keymap = [	
+  { on = "q", run = "close",  desc = "Hide the help" },
+	{ on = "/", run = "filter", desc = "Filter help items" },
+]
