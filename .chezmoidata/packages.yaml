@@ -13,3 +13,7 @@ packages:
     - git
     - visual-studio-code-bin
     - fd
+    - chezmoi
+    - fcitx5
+    - fcitx5-bamboo
+    - ttf-jetbrains-mono-nerd

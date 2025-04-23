@@ -1,0 +1,51 @@
+{
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "editor.fontFamily": "'CaskaydiaCove Nerd Font Mono','Droid Sans Mono', 'monospace', monospace",
+  "dart.flutterSdkPaths": ["~/development/flutter/"],
+  "workbench.iconTheme": "material-icon-theme",
+  "dart.flutterAdbConnectOnChromeOs": true,
+  "editor.fontLigatures": true,
+  "git.autofetch": true,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "vscode-neovim.neovimClean": true,
+  "json.schemas": [],
+
+  "vim.enableNeovim": true,
+  "vim.neovimUseConfigFile": false,
+  "vim.highlightedyank.enable": true,
+  "vim.hlsearch": true,
+  "vim.surround": true,
+  "vim.targets.bracketObjects.enable": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["g", "I"], "after": ["editor.action.goToImplementation"] }
+  ],
+  "vim.insertModeKeyBindingsNonRecursive": [
+    { "before": ["j", "k"], "after": ["<Esc>"] }
+  ],
+  "vim.leader": "<space>",
+  "vim.smartRelativeLine": true,
+  "vim.timeout": 500,
+  "vim.useSystemClipboard": true,
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+    "asvetliakov.vscode-neovim": 1
+  },
+  "workbench.settings.applyToAllProfiles": [],
+  "editor.cursorBlinking": "smooth", // Tùy chọn để con trỏ nhấp nháy mượt mà
+  "editor.cursorStyle": "line", // Kiểu con trỏ là một đường thẳng
+  "editor.cursorWidth": 2, // Độ rộng của con trỏ (2px thường là tốt)
+  "editor.smoothScrolling": true, // Bật cuộn mượt mà khi di chuyển trong mã
+  "editor.scrollBeyondLastLine": false,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "workbench.list.smoothScrolling": true,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.cursorBlinking": true,
+  "editor.lineNumbers": "relative",
+  "editor.wordWrap": "on",
+  "explorer.confirmDragAndDrop": false
+}

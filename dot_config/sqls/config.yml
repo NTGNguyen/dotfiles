@@ -1,0 +1,10 @@
+lowercaseKeywords: false
+connections:
+  - alias: supabase
+    driver: postgresql
+    proto: tcp
+    user: postgres
+    passwd: postgres
+    host: localhost
+    port: 54322
+    dbName: postgres
