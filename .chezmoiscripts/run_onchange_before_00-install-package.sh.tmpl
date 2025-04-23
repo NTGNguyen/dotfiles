@@ -1,0 +1,17 @@
+{{ if eq .chezmoi.osRelease.id "endeavouros" -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+if ! command -v yay &>/dev/null; then
+  echo "yay is not installed."
+  exit 1
+fi
+
+yay -Sy
+
+{{ range .packages.eos -}}
+yay -S --noconfirm {{ . | quote }}
+{{ end -}}
+
+{{ end -}}

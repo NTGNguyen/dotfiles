@@ -1,0 +1,15 @@
+packages:
+  eos:
+    - fzf
+    - neovim
+    - tmux
+    - bat
+    - exa
+    - yazi
+    - zoxide
+    - fastfetch
+    - lazygit
+    - lazydocker
+    - git
+    - visual-studio-code-bin
+    - fd
