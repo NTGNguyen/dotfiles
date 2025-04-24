@@ -34,6 +34,10 @@ url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha/catpp
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/kitty/refs/heads/main/themes/mocha.conf"
 
-[".config/btop/catppuccin-mocha.theme"]
+[".config/btop/themes/catppuccin-mocha.theme"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/btop/refs/heads/main/themes/catppuccin_mocha.theme"
+
+[".config/bat/themes/catppuccin-mocha.theme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin%20Mocha.tmTheme"
