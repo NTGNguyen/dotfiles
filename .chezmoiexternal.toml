@@ -33,3 +33,7 @@ url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha/catpp
 [".config/kitty/theme.conf"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/kitty/refs/heads/main/themes/mocha.conf"
+
+[".config/btop/catppuccin-mocha.theme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/btop/refs/heads/main/themes/catppuccin_mocha.theme"
