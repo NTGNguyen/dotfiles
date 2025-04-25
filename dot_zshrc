@@ -1,26 +1,6 @@
 [[ $- != *i* ]] && return
 
-function command_not_found_handler {
-  local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
-  printf 'zsh: command not found: %s\n' "$1"
-  local entries=( ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"} )
-  if (( ${#entries[@]} > 0 )); then
-    printf "${bright}$1${reset} may be found in the following packages:\n"
-    local pkg
-    for entry in "${entries[@]}"; do
-      local fields=( ${(0)entry} )
-      if [[ "$pkg" != "${fields[2]}" ]]; then
-        printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
-      fi
-      printf '    /%s\n' "${fields[4]}"
-      pkg="${fields[2]}"
-    done
-  fi
-  return 127
-}
-
 function load_zsh_plugins {
-  # Oh-my-zsh installation path
   zsh_paths=(
     "$HOME/.oh-my-zsh"
     "/usr/local/share/oh-my-zsh"
@@ -38,100 +18,6 @@ function load_zsh_plugins {
   [[ -r $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 }
 
-# Install packages from both Arch and AUR
-function in {
-  local -a inPkg=("$@")
-  local -a arch=()
-  local -a aur=()
-
-  for pkg in "${inPkg[@]}"; do
-    if pacman -Si "${pkg}" &>/dev/null; then
-      arch+=("${pkg}")
-    else
-      aur+=("${pkg}")
-    fi
-  done
-
-  if [[ ${#arch[@]} -gt 0 ]]; then
-    sudo pacman -S "${arch[@]}"
-  fi
-
-  if [[ ${#aur[@]} -gt 0 ]]; then
-    ${aurhelper} -S "${aur[@]}"
-  fi
-}
-
-# Function to display a slow load warning
-function slow_load_warning {
-  local lock_file="/tmp/.hyde_slow_load_warning.lock"
-  local load_time=$SECONDS
-
-  # Check if the lock file exists
-  if [[ ! -f $lock_file ]]; then
-    # Create the lock file
-    touch $lock_file
-
-    # Display the warning if load time exceeds the limit
-    time_limit=3
-    if ((load_time > time_limit)); then
-      cat <<EOF
-    ⚠️ Warning: Shell startup took more than ${time_limit} seconds. Consider optimizing your configuration.
-        1. This might be due to slow plugins, slow initialization scripts.
-        2. Duplicate plugins initialization.
-            - navigate to ~/.zshrc and remove any 'source ZSH/oh-my-zsh.sh' or
-                'source ~/.oh-my-zsh/oh-my-zsh.sh' lines.
-            - HyDE already sources the oh-my-zsh.sh file for you.
-            - It is important to remove all HyDE related
-                configurations from your .zshrc file as HyDE will handle it for you.
-            - Check the '.zshrc' file from the repo for a clean configuration.
-                https://github.com/HyDE-Project/HyDE/blob/master/Configs/.zshrc
-        3. Check the '~/.hyde.zshrc' file for any slow initialization scripts.
-        4. Check the '~/.p10k.zsh' file for any slow initialization scripts.
-
-    For more information, on the possible causes of slow shell startup, see:
-        🌐 https://github.com/HyDE-Project/HyDE/wiki
-
-EOF
-    fi
-  fi
-}
-
-# Function to handle initialization errors
-function handle_init_error {
-  if [[ $? -ne 0 ]]; then
-    echo "Error during initialization. Please check your configuration."
-  fi
-}
-
-# Function to remove the lock file on exit
-function cleanup {
-  rm -f /tmp/.hyde_slow_load_warning.lock
-}
-
-function no_such_file_or_directory_handler {
-  local red='\e[1;31m' reset='\e[0m'
-  printf "${red}zsh: no such file or directory: %s${reset}\n" "$1"
-  return 127
-}
-
-# We are loading the prompt on start so users can see the prompt immediately
-# Powerlevel10k theme path
-P10k_THEME=${P10k_THEME:-/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme}
-[[ -r $P10k_THEME ]] && source $P10k_THEME
-
-# Detect AUR wrapper and cache it for faster subsequent loads
-aur_cache_file="/tmp/.aurhelper.zshrc"
-if [[ -f $aur_cache_file ]]; then
-  aurhelper=$(<"$aur_cache_file")
-else
-  if pacman -Qi yay &>/dev/null; then
-    aurhelper="yay"
-  elif pacman -Qi paru &>/dev/null; then
-    aurhelper="paru"
-  fi
-  echo "$aurhelper" > "$aur_cache_file"
-fi
-
 # wget
 WGETRC="${XDG_CONFIG_HOME}/wgetrc"
 SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
@@ -139,152 +25,26 @@ SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
 export XDG_CONFIG_HOME XDG_CONFIG_DIR XDG_DATA_HOME XDG_STATE_HOME XDG_CACHE_HOME XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR \
   XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
 
-
-# Helpful aliases
-alias c='clear' \
-  cd='z'\
-  v='nvim'\
-  ld='lazydocker'\
-  lg='lazygit'\
-  un='$aurhelper -Rns' \
-  up='$aurhelper -Syu' \
-  pl='$aurhelper -Qs' \
-  pa='$aurhelper -Ss' \
-  pc='$aurhelper -Sc' \
-  po='$aurhelper -Qtdq | $aurhelper -Rns -' \
-  vc='code' \
-  fastfetch='fastfetch' \
-  ..='cd ..' \
-  ...='cd ../..' \
-  .3='cd ../../..' \
-  .4='cd ../../../..' \
-  .5='cd ../../../../..' \
-  mkdir='mkdir -p' # Always mkdir a path (this doesn't inhibit functionality to make a single dir)
+source ~/zsh/completions.zsh
 
 load_zsh_plugins
-
-if [ $(command -v "eza") ]; then
-  EZA_OPTS=(
-    '--colour=always'
-    '--group-directories-first'
-    '--icons=auto'
-    '--ignore-glob=".DS_Store|.idea|.venv|.vs|__pycache__|cache|debug|.git|node_modules|venv"'
-  )
-  alias l="eza -lh $EZA_OPTS" # long list
-  alias ls="exa -1 $EZA_OPTS" # Normal ls
-  alias ll="exa -lhag $EZA_OPTS" # Long list all
-  alias ld="eza -lhD $EZA_OPTS" # long list dirs
-  alias lt="eza -T $EZA_OPTS" # list folder as tree
-  alias llt="eza -lagT $EZA_OPTS" # list folder as tree
-fi
-
-# Load plugins
-
-
-#zoxide
-eval "$(zoxide init zsh)"
-# Warn if the shell is slow to load
-autoload -Uz add-zsh-hook
-add-zsh-hook -Uz precmd slow_load_warning
-
-# ZSH STYLE
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' menu yes select search
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-zstyle ':fzf-tab:*' use-fzf-default-opts yes
-zstyle ':fzf-tab:*' switch-group '<' '>'
-zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
-zstyle ':fzf-tab:*' popup-min-size 120 10
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
-
-#Ref: Kevinitro dotfiles
-_fzf_open_path() {
-  local input_path=$1
-  if [ ! -n "$input_path" ]; then
-    return 1
-  fi
-  declare -A cmds=(
-    [bat]='bat $input_path'
-    [cat]='cat $input_path'
-    [cd]='[[ -f "$input_path" ]] && input_path=$(dirname "$input_path"); cd $input_path'
-    [nvim]='nvim $input_path'
-    [remove]='rm -rf $input_path'
-    [echo]='echo $input_path'
-  )
-  local cmd=$(printf "%s\n" "${(@k)cmds}" | fzf --prompt 'Select command> ')
-  eval "${cmds[$cmd]}"
-}
-
-_fzf_get_path_using_fd() {
-  local input_path=$(
-    fd --type file |
-    fzf --prompt 'Files> ' \
-      --header 'CTRL-S: Switch between Files/Directories' \
-      --bind 'ctrl-s:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
-        echo "change-prompt(Files> )+reload(fd --type file)" ||
-    echo "change-prompt(Directories> )+reload(fd --type directory)"' \
-      --preview '[[ $FZF_PROMPT =~ Files ]] && bat --color=always --style=plain {} || tree -C {}'
-  )
-  echo "$input_path"
-}
-
-_fzf_get_path_using_rg() {
-  rm -f /tmp/rg-fzf-{r,f}
-  local RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-  local INITIAL_QUERY="${*:-}"
-  local input_path=$(
-    fzf --ansi --disabled --query "$INITIAL_QUERY" \
-      --bind "enter:become(echo {1})" \
-      --bind "start:reload:$RG_PREFIX {q}" \
-      --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-      --bind 'ctrl-s:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
-      echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
-    echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
-      --color "hl:-1:underline,hl+:-1:underline:reverse" \
-      --prompt '1. ripgrep> ' \
-      --delimiter : \
-      --header 'CTRL-S: Switch between ripgrep/fzf' \
-      --preview 'bat --color=always {1} --highlight-line {2} --style=plain' \
-      --preview-window 'up,60%,border-bottom,+{2}+3/3'
-  )
-  echo "$input_path"
-}
-
-fdg() {
-  _fzf_open_path "$(_fzf_get_path_using_fd)"
-}
-
-rgg() {
-  _fzf_open_path "$(_fzf_get_path_using_rg)"
-}
-
-
-alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
-alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-
-alias bathelp='bat --plain --language=help'
-help() {
-  "$@" --help 2>&1 | bathelp
-}
-
-#bindkey
-fdg_widget() {
-  zle -I # clear any pending input
-  local result=$(fdg)
-  [[ -n $result ]] && LBUFFER+="$result"
-}
-
-zle -N fdg_widget
-bindkey '^F' fdg_widget  # add-zsh-hook zshexit cleanup
-
 fastfetch
 
+#PK10Theme
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+P10k_THEME=${P10k_THEME:-/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme}
+[[ -r $P10k_THEME ]] && source $P10k_THEME
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#inti zoxide
+eval "$(zoxide init zsh)"
+
+source ~/zsh/aur.zsh
+source ~/zsh/hyde_handle_function.zsh
+source ~/zsh/history.zsh
+source ~/zsh/custom-function.zsh
+source ~/zsh/alias.zsh
+source ~/zsh/exit.zsh
