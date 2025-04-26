@@ -20,6 +20,7 @@ alias c='clear' \
   .5='cd ../../../../..' \
   mkdir='mkdir -p' # Always mkdir a path (this doesn't inhibit functionality to make a single dir)
 
+#Ref: KevinnitroG
 if [ $(command -v "eza") ]; then
   EZA_OPTS=(
     '--colour=always'
@@ -43,3 +44,10 @@ help() {
   "$@" --help 2>&1 | bathelp
 }
 
+#Tmux
+alias tmux='tmux -u'
+alias t='tmux'
+alias ta='tmux attach-session -t'
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tk='tmux kill-session -t'
