@@ -14,7 +14,7 @@ function command_not_found_handler {
     printf "${bright}$1${reset} may be found in the following packages:\n"
     local pkg
     for entry in "${entries[@]}"; do
-      local fields=( ${(0)entry} )
+      local fields=( ${(1)entry} )
       if [[ "$pkg" != "${fields[2]}" ]]; then
         printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
       fi
