@@ -1,5 +1,6 @@
 #!usr/bin/env zsh
 
+
 alias c='clear' \
   cd='z'\
   v='nvim'\
