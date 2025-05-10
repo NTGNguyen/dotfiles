@@ -1,0 +1,27 @@
+[".oh-my-zsh/custom/plugins/fzf-tab"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/fzf-tab.git"
+
+[".oh-my-zsh/custom/plugins/zsh-wakatime"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/zsh-wakatime.git"
+
+[".oh-my-zsh/custom/plugins/zsh-256color"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/zsh-wakatime.git"
+
+[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/zsh-autosuggestions.git"
+
+[".oh-my-zsh/custom/plugins/zsh-better-npm-completion"]
+type = "git-repo"
+url = "https://github.com/lukechilds/zsh-better-npm-completion.git"
+
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+
+[".oh-my-zsh/custom/plugins/gradle-completion"]
+type = "git-repo"
+url = "https://github.com/gradle/gradle-completion.git"

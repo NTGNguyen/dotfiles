@@ -17,3 +17,5 @@ packages:
     - fcitx5
     - fcitx5-bamboo
     - ttf-jetbrains-mono-nerd
+    - mise
+    - yq
