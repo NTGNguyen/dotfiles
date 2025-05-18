@@ -1,4 +1,5 @@
 [tools]
+gradle = "latest"
 usage = "latest"
 
 [settings]
