@@ -12,3 +12,10 @@ Host keke
   User kevinnitro
   Port 22
   IdentityFile ~/.ssh/id_ed25519
+
+Host kevduck
+  HostName kevinnitrohome.duckdns.org
+  User kevinnitro
+  Port 33
+  IdentityFile ~/.ssh/id_ed25519
+

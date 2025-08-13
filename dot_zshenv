@@ -1,6 +1,7 @@
 # export env vars here
 export PATH="$PATH:/home/ntgnguyen/Android/Sdk/platform-tools"
 export PATH="$PATH:/home/ntgnguyen/developments/flutter/bin"
+export PATH="$PATH:$(go env GOPATH)/bin"
 # cleaning up home folder
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 XDG_CONFIG_DIR="${XDG_CONFIG_DIR:-HOME/.config}"
@@ -24,4 +25,6 @@ export XDG_CONFIG_HOME XDG_CONFIG_DIR XDG_DATA_HOME XDG_STATE_HOME XDG_CACHE_HOM
   XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR
 
 export EDITOR=nvim
+
+#Go tool
 
