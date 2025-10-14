@@ -28,3 +28,4 @@ export EDITOR=nvim
 
 #Go tool
 
+. "$HOME/.cargo/env"

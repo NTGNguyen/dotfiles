@@ -9,7 +9,7 @@ function load_zsh_plugins {
   for zsh_path in "${zsh_paths[@]}"; do [[ -d $zsh_path ]] && export ZSH=$zsh_path && break; done
   # Load Plugins
   hyde_plugins=( git zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
-  plugins+=( "${plugins[@]}" "${hyde_plugins[@]}" git zsh-256color zsh-autosuggestions zsh-syntax-highlighting dotenv sudo fzf-tab zsh-wakatime mise gradle-completion golang kubectl)
+  plugins+=( "${plugins[@]}" "${hyde_plugins[@]}" git zsh-256color zsh-autosuggestions zsh-syntax-highlighting dotenv sudo fzf-tab zsh-wakatime mise gradle-completion golang kubectl nix-zsh-completions)
   # Deduplicate plugins
   plugins=("${plugins[@]}")
   plugins=($(printf "%s\n" "${plugins[@]}" | sort -u))
@@ -42,3 +42,8 @@ source ~/zsh/custom-function.zsh
 source ~/zsh/alias.zsh
 source ~/zsh/exit.zsh
 source ~/zsh/kus_com.zsh
+
+export GPG_TTY=$(tty)
+
+. "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+
