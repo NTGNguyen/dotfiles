@@ -1,5 +1,14 @@
 [tools]
+go = "latest"
 usage = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
+experimental = true
+
+[plugins]
+nix = "https://github.com/mise-plugins/mise-nix"
+
+[hooks]
+enter = "mise i -q"
+
