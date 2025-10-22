@@ -3,7 +3,8 @@
 
 alias c='clear' \
   cd='z'\
-  v='nvim'\
+  v='NVIM_APPNAME=nvim nvim'\
+  v-self-config='NVIM_APPNAME=nvim-self-config nvim'\
   ld='lazydocker'\
   lg='lazygit'\
   un='$aurhelper -Rns' \
