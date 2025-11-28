@@ -61,13 +61,9 @@ rgg() {
   _fzf_open_path "$(_fzf_get_path_using_rg)"
 }
 
-fdg_widget() {
-  zle -I # clear any pending input
-  local result=$(fdg)
-  [[ -n $result ]] && LBUFFER+="$result"
-}
 
-zle -N fdg_widget
-bindkey '^F' fdg_widget  # add-zsh-hook zshexit cleanup
+
+zle -N fdg
+bindkey '^F' fdg # add-zsh-hook zshexit cleanup
 
 
