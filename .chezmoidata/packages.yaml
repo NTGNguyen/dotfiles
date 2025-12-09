@@ -19,3 +19,4 @@ packages:
     - ttf-jetbrains-mono-nerd
     - mise
     - yq
+    - brave-bin
