@@ -17,6 +17,7 @@ function load_zsh_plugins {
     zsh-256color
     zsh-autosuggestions
     zsh-syntax-highlighting
+    history-substring-search
     dotenv
     sudo
     fzf-tab
@@ -48,6 +49,8 @@ P10k_THEME=${P10k_THEME:-/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-th
 [[ -r $P10k_THEME ]] && source $P10k_THEME
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+
 #inti zoxide
 eval "$(zoxide init zsh)"
 
@@ -58,6 +61,11 @@ source ~/zsh/custom-function.zsh
 source ~/zsh/alias.zsh
 source ~/zsh/exit.zsh
 source ~/zsh/kus_com.zsh
+
+# chpwd hook
+chpwd () {
+  ls
+}
 
 export GPG_TTY=$(tty)
 
