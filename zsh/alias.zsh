@@ -3,6 +3,7 @@
 # global alias
 alias -g NE='2>/dev/null'
 alias -g ND='> /dev/null'
+alias -g C='| wl-copy'
 
 alias c='clear' \
   cd='z'\
