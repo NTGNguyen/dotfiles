@@ -1,9 +1,10 @@
 [tools]
 bun = "latest"
+claude = "latest"
 go = "latest"
 golangci-lint = "latest"
 "npm:oh-my-opencode-slim" = "latest"
-opencode = "latest"
+opencode = "1.15.4"
 usage = "latest"
 uv = "latest"
 
